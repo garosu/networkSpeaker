@@ -1,0 +1,56 @@
+{% extends 'layout.html' %}
+
+{% block stylelink %}
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous"><head>
+{% endblock %}
+
+{% block title %}{{title}}{% endblock %}
+
+{% block style %}
+	/* Styles for the popup overlay */
+	.popup-overlay {
+		position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background-color: rgba(0, 0, 0, 0.2);
+			z-index: 1;
+			display: none;
+	}
+
+	/* Styles for the popup box */
+	.popup {
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		width: 340px;
+		transform: translate(-50%, -50%);
+		background-color: white;
+		padding: 20px;
+		border: 1px solid black;
+		border-radius: 5px;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+	}
+{% endblock %}
+
+{% block content %}
+	    <h1>{{ title }}</h1>
+		
+		{% for user in dbUser %}
+			<div>
+				<form action="/delete_user" method="POST">
+					<input type="text" name="user_id" value="{{ user.id }}">
+					<input type="text" name="username" value="{{ user.username }}">
+					<input type="password" name="password" value="{{ user.password }}">
+				    <button type="submit"><i class="fas fa-trash"></i></button>
+				</form>
+			</div>
+		{% else %}	
+			<li>
+				<em>Unbelievable. No entries so far</em>
+		{% endfor %}		
+{% endblock %}
+
+{% block javascript %} 
+{% endblock %}

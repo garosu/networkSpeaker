@@ -1,0 +1,82 @@
+{% extends 'layout.html' %}
+
+{% block stylelink %}
+    <link rel="stylesheet" href="./static/stylesheet/output_gain.css"
+{% endblock %}
+{% block title %}{{title}}{% endblock %}
+
+<!-- Sub-menu on the right -->
+{% block content %}
+		<h1 style="color:#5050ff">Output Gain (dB)</h1>
+		<hr />
+		<form action="/saveSystemVolume-Exe" method="POST">
+			<div class="sound-bar">
+				<div class="sound-bar-fill"></div>
+				<div class="scroll-bar">
+					<div class="scroll-thumb"></div>
+				</div>
+			</div>
+			<br>
+			<label>VOLUME VALUE </label>
+			<label id="idLabelValue">{{curVolume}}</label>
+			<input type="text" id="idMelong" name="saveVolume" value="">
+			<br>
+			<span><button type="submit">Save</button></span>
+		</form>
+{% endblock %}
+			
+
+{% block javascript %}
+		// Get the sound bar and scroll bar elements
+		var soundBar = document.querySelector('.sound-bar');
+		var scrollBar = soundBar.querySelector('.scroll-bar');
+		var scrollThumb = scrollBar.querySelector('.scroll-thumb');
+		
+		var valVolume = document.getElementById('idLabelValue'); //garosu
+		var valMelong = document.getElementById('idMelong'); //garosu
+		valMelong.value = valVolume.textContent;
+		//valVolume.textContent = '';
+		
+		// Get the width of the sound bar and scroll bar
+		var soundBarWidth = soundBar.offsetWidth;
+		var scrollBarWidth = scrollBar.offsetWidth;
+
+		// Calculate the maximum left position of the scroll thumb
+		var maxLeft = scrollBarWidth - scrollThumb.offsetWidth;
+		
+		scrollThumb.style.left = newLeft = parseInt(valVolume.textContent)*10 + 'px';
+		soundBar.querySelector('.sound-bar-fill').style.width = parseInt(valVolume.textContent) + '%';
+
+		// Add an event listener to the scroll bar
+		scrollBar.addEventListener('mousedown', function(event) {
+			// Calculate the new left position of the scroll thumb based on the click position
+			var newLeft = event.offsetX - scrollThumb.offsetWidth / 2;
+
+			// Make sure the new left position is within the bounds of the scroll bar
+			if (newLeft < 0) {
+				newLeft = 0;
+			} else if (newLeft > maxLeft) {
+				newLeft = maxLeft;
+			}
+
+			// Set the left position of the scroll thumb
+			scrollThumb.style.left = newLeft + 'px';
+
+			// Calculate the new width of the sound bar fill based on the position of the scroll thumb
+			var newWidth = (newLeft + scrollThumb.offsetWidth / 2) / soundBarWidth * 100;
+
+			// Set the width of the sound bar fill
+			soundBar.querySelector('.sound-bar-fill').style.width = newWidth + '%';
+			newWidth = Math.floor(parseInt(newWidth))
+			valVolume.textContent = newWidth;//Math.floor(parseInt(newWidth));
+			valMelong.value = valVolume.textContent;
+			//valVolume.textContent = '';
+		});
+
+		// Add an event listener to the scroll thumb to allow dragging
+		scrollThumb.addEventListener('mousedown', function(event) {
+			// Get the initial position of the mouse and the scroll thumb
+			var initialMouseX = event.clientX;
+			var initialThumbX = scrollThumb.offset
+		});
+{% endblock %}

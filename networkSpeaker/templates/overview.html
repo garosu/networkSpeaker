@@ -1,0 +1,39 @@
+{% extends 'layout.html' %}
+
+{% block title %}{{title}}{% endblock %}
+
+{% block style %}
+	.garosu-button {
+		background-color: orange;
+		border-radius: 4px;
+		border-color: #808080;
+		height: 30px;
+		overflow: hidden;
+		width: 200px;
+		color: white;
+		text-align: center;
+		font-weight: bold;
+	}
+{% endblock %}
+
+
+{% block content %}
+	<h1 style="color:#5050ff">Overview</h1>
+	<dl>
+		<dt>Product Name</dt>
+		<dd>{{productName}}</dd>		
+	</dl>
+	<hr />
+	<dl>
+		<dt>Serial Number</dt>
+		<dd>AC:2F;A8:F0:00:00</dd>		
+	</dl>
+	<hr />
+	<dl>
+		<dt>IPv4 address</dt>
+		<dd>{{ip_address}}</dd>		
+	</dl>
+	<hr />
+	<br>
+	<button class="garosu-button"><a href="schedules">Audio Player</a></button><br>
+{% endblock %}

@@ -1,0 +1,172 @@
+.schedules-form {
+	background-color: #d0ffff;
+	border-radius: 5px;
+	position: absolute;
+	top:50px;
+	left:100px;
+	height: 30px;
+	width: 200px;
+	overflow: hidden;
+}
+.music-form {
+	background-color: #d0ffff;
+	border-radius: 5px;
+	position: absolute;
+	top:50px;
+	left:350px;
+	height: 30px;
+	width: 200px;
+	overflow: hidden;
+}
+.announcements-form {
+	background-color: #d0ffff;
+	border-radius: 5px;
+	position: absolute;
+	top:50px;
+	left:600px;
+	height: 30px;
+	width: 200px;
+	overflow: hidden;
+}
+
+.addMusic-button {
+	background-color: yellow;
+	border-radius: 5px;
+	position: absolute;
+	left:880px;
+	top: 60px;
+	width: 100px;
+	height: 30px;
+	overflow: hidden;
+}
+.addAnnounce-button {
+	background-color: yellow;
+	border-radius: 5px;
+	position: absolute;
+	left:1000px;
+	top: 60px;
+	width: 100px;
+	height: 30px;
+	overflow: hidden;
+}
+
+/* Styles for the popup overlay */
+.popup-overlay {
+	position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.2);
+        z-index: 1;
+        display: none;
+}
+
+/* Styles for the popup box */
+.popup {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	width: 340px;
+	transform: translate(-50%, -50%);
+	background-color: white;
+	padding: 20px;
+	border: 1px solid black;
+	border-radius: 5px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+        .popup label {
+            display: block;
+            margin-top: 5px;
+            margin-bottom: 5px;
+            color:gray;
+        }
+
+        .popup input[type="time"] {
+            width: 96%;
+            padding: 5px;
+            margin-bottom: 15px;
+            color: red;
+        }
+
+        .popup input[type="date"] {
+            width: 96%;
+            padding: 5px;
+            margin-bottom: 15px;
+            color: red;
+        }
+
+        .popup input[type="text"] {
+            width: 96%;
+            padding: 5px;
+            margin-bottom: 15px;
+        }
+
+        .popup select {
+            width: 100%;
+            padding: 5px;
+            margin-bottom: 15px;
+        }
+
+        .popup button {
+            margin-top: 20px;
+            margin-left: 10px;
+            width: 45%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+ 
+.garosu-button {
+	background-color: #2080ff;
+	border-radius: 4px;
+	border-color: #8080ff;
+	height: 30px;
+	overflow: hidden;
+	width: 200px;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+}
+
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-top: 50px;
+  width: 100%;
+}
+th,
+td {
+  padding: 6px 15px;
+}
+th {
+  background: #42444e;
+  color: #fff;
+  text-align: left;
+}
+tr:first-child th:first-child {
+  border-top-left-radius: 6px;
+}
+tr:first-child th:last-child {
+  border-top-right-radius: 6px;
+}
+td {
+  border-right: 1px solid #c6c9cc;
+  border-bottom: 1px solid #c6c9cc;
+}
+td:first-child {
+  border-left: 1px solid #c6c9cc;
+}
+tr:nth-child(even) td {
+  background: #eaeaed;
+}
+tr:last-child td:first-child {
+  border-bottom-left-radius: 6px;
+}
+tr:last-child td:last-child {
+  border-bottom-right-radius: 6px;
+}

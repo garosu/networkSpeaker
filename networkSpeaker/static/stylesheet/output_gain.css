@@ -1,0 +1,41 @@
+/* Styling for the sound bar container */
+.sound-bar {
+	background-color: #f2f2f2;
+	border-radius: 5px;
+	margin-left: 50px;
+	margin-top: 30px;
+	height: 50px;
+	width: 1000px;
+	overflow: hidden;
+}
+
+/* Styling for the sound bar fill */
+.sound-bar-fill {
+	background-color: orange;
+	height: 100%;
+	transition: width 0.2s ease-in-out;
+	width: 50%; /* default fill amount */
+}
+
+/* Styling for the scroll bar */
+.scroll-bar {
+	background-color: #ddd;
+	border-radius: 5px;
+	cursor: pointer;
+	height: 14px;
+	position: relative;
+	top: -5px;
+	transition: background-color 0.2s ease-in-out;
+	width: 100%;
+}
+
+/* Styling for the scroll thumb */
+.scroll-thumb {
+	background-color: orange;
+	border-radius: 5px;
+	height: 100%;
+	left: 50%; /* default thumb position */
+	position: absolute;
+	transition: left 0.2s ease-in-out;
+	width: 20px;
+}

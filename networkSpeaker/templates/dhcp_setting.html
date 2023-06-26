@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+
+{% block stylelink %}
+    <link rel="stylesheet" href="./static/stylesheet/dhcp_setting.css"
+{% endblock %}
+
+{% block title %}{{title}}{% endblock %}
+
+{% block content %}
+    <h1 style="color:#5050ff">DHCP Setting</h1>
+
+    <form method="POST" action="/change-dhcpip">
+		<label >If pressed SAVE, it assign ip address automatically</label>
+		<input type="submit" value="Save">
+    </form>
+{% endblock %}
+
+{% block javascript %}
+		// Get the network settings menu and close button elements
+		var networkSettingsMenu = document.querySelector('.network-settings-menu');
+		var closeButton = networkSettingsMenu.querySelector('.close-button');
+
+		// Add an event listener to the close button to hide the network settings menu
+		closeButton.addEventListener('click', function() {
+			networkSettingsMenu.style.display = 'none';
+		});
+{% endblock %}

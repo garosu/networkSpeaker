@@ -1,0 +1,139 @@
+{% extends 'layout.html' %}
+
+{% block stylelink %}
+	<link rel="stylesheet" href="./static/stylesheet/schedules.css">
+{% endblock %}
+
+{% block title %}{{title}}{% endblock %}
+{% block content %}
+	<form class="schedules-form" method="GET" action="{{ url_for('gotoSchedulesPage') }}">
+		<button class="garosu-button" type="submit">SCHEDULES</button>
+	</form>
+
+	<form class="music-form" method="GET" action="{{ url_for('gotoMusicPage') }}">
+		<button class="garosu-button" type="submit">MUSIC</button>
+	</form>
+
+	<form class="announcements-form" method="GET" action="{{ url_for('gotoAnnouncementsPage') }}">
+		<button class="garosu-button" type="submit">ANNOUNCEMENTS1</button>
+	</form>
+
+	<button id="btnAddMusic" class="addMusic-button" onclick="clicked_btnAddMusic()" type="submit"><b>music(+)</b></button>
+	<button id="btnAddAlarm" class="addAnnounce-button" onclick="clicked_btnAddAlarm()" type="submit"><b>announce(+)</b></button>
+	
+	<br>
+		
+	<div class="popup-overlay" id="musicpopup-overlay">
+	    <div class="popup">
+		<h2>Add playlist scheduler</h2>
+		<form action="/addSchedules" method="POST"><br />
+			<input type="hidden" name="valtype" value="music">
+				
+			<label id="idLabelType" name="">Scheduler type</label>
+			<select name="valmode">
+				<option value="once">Once</option>
+				<option value="daily">Daily</option>
+				<option value="weekly">Weekly</option>
+				<option value="monthly">Monthly</option>
+			</select>
+			
+			<label id="idLabelSource" name="">Playable source</label>
+			<!--<input type="text" id="idPlaylist" name="valplaylist">-->
+			<select name="valplaylist">
+				{% for item in songstablelist %}
+					<option value="{{item}}">{{item}}</option>
+				{% endfor %}							
+			</select>
+			<label id="idLabelStarttime">Start time</label>
+			<input type="time" id="idInputStarttime" name="valstarttime">
+
+			<!--<label id="idLabelEndtime">End time</label>
+			<input type="time" id="idInputEndtime" name="valendtime">-->
+
+			<label id="idLabelDays">Days</label>
+			<input type="date" id="idInputDays" name="valcalendar">
+
+			<button id="btnClose" name="Close">Close</button>   
+			<button id="btnReserve" name="Reserve" type="submit" value="Reserve">Reserve</button>
+		</form>
+	    </div>
+	</div>
+	
+	<div class="popup-overlay" id="alarmpopup-overlay">
+	    <div class="popup">
+		<h2>Add annoucement scheduler</h2>
+		<hr />
+		<form action="/addSchedules" method="POST"><br />
+			<input type="hidden" name="valtype" value="alarm">
+
+			<label id="idLabelType" name="">Scheduler type</label>
+			<select name="valmode">
+				<option value="once">Once</option>
+				<option value="daily">Daily</option>
+				<option value="weekly">Weekly</option>
+				<option value="monthly">Monthly</option>
+			</select>
+
+			<label id="idLabelSource" name="">Announcement</label>
+			<!--<input type="text" id="idPlaylist" name="valplaylist">-->
+			<select name="valplaylist">
+				{% for item in alarminfos %}
+					<option value="{{item.alarm_link}}">{{item.alarm_link}}</option>
+				{% endfor %}							
+			</select>
+
+			<label id="idLabelStarttime">Start time</label>
+			<input type="time" id="idInputStarttime" name="valstarttime">
+
+			<label id="idLabelDays">Days</label>
+			<input type="date" id="idInputDays" name="valcalendar">
+
+			<button id="btnClose" name="Close">Close</button>   
+			<button id="btnReserve" name="Reserve" type="submit" value="Reserve">Reserve</button>
+		</form>
+  	    </div>
+	</div>
+	
+	<table>
+		<th>jobID</th>
+		<th>name</th>
+		<th>mode</th>
+		<th>start_time</th>
+
+		{% for schedule in lstSchedules %}
+		<tr>
+			<td>{{schedule.id}}</td>
+			<td>{{schedule.shed_name}}</td>
+			<td>{{schedule.shed_mode}}</td>
+			<td>{{schedule.start_time}}</td>
+		</tr>
+		{% endfor %}
+	</table>
+
+{% endblock %}
+
+{% block javascript %} 
+      // Get the popup overlay and popup box elements
+      var musicOverlayPopup = document.getElementById("musicpopup-overlay");
+      var alarmOverlayPopup = document.getElementById("alarmpopup-overlay");
+      var popupBox = document.querySelector(".popup");
+      
+        function clicked_btnAddMusic() {
+            musicOverlayPopup.style.display = "block";
+        }
+        function clicked_btnAddAlarm() {
+            alarmOverlayPopup.style.display = "block";
+        }
+
+      // Close the popup if the user clicks outside of it
+      window.onclick = function(event) {
+        if (event.target == musicOverlayPopup) {
+          musicOverlayPopup.style.display = "none";
+        }
+	else if(event.target == alarmOverlayPopup) {
+          alarmOverlayPopup.style.display = "none";
+	}		
+      }
+
+{% endblock %}		
+

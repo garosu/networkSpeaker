@@ -1,0 +1,157 @@
+﻿{% extends 'layout.html' %}
+
+{% block stylelink %}
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+	<link rel="stylesheet" href="./static/stylesheet/music.css">
+	<link rel="stylesheet" href="./static/stylesheet/schedules.css">
+{% endblock %}
+
+{% block title %}{{title}}{% endblock %}
+{% block content %}
+		<form class="schedules-form" method="GET" action="{{ url_for('gotoSchedulesPage') }}">
+			<button class="garosu-button" type="submit">SCHEDULES</button>
+		</form>
+
+		<form class="music-form" method="GET" action="{{ url_for('gotoMusicPage') }}">
+			<button class="garosu-button" type="submit">MUSIC</button>
+		</form>
+
+		<form class="announcements-form" method="GET" action="{{ url_for('gotoAnnouncementsPage') }}">
+			<button class="garosu-button" type="submit">ANNOUNCEMENTS</button>
+		</form>
+		
+		<br>
+		<br>
+		<br>
+		
+		<div class="form-container">
+			<div>
+				<div >
+					<label class="label_playable">Playable items</label><br>
+
+					<button class="button_library" onclick="toggleShow()">Library</button><br>
+					<div id="song-list">
+						<ul >
+							{% for item in songstablelist %}
+								<li><a href="/playlist_tables/{{item}}">{{item}}</a></li>
+							{% endfor %}							
+						</ul>
+					</div>
+
+					<button class="button_library" onclick="clicked_btnAddPlaylist()" type="submit">Add Playlist</button><br>	
+					<button class="button_library"onclick="clicked_btnAddSong()" type="submit">Add song to Playlist</button>	
+					
+				</div>
+			</div>
+
+			<div>
+				<div class="formPlaylist-container">
+					<form action="/play-Songlist" method="POST">
+						<button class="playsonglist-button" type="submit">Play songlist</button>
+					</form>			
+				</div>
+			{% for audioClip in dbSong %}
+				<div class="formRight-container">
+					<form action="/controlSong-form" method="POST">
+						<input type="hidden" name="song_func" value="playsong">
+						<input type="hidden" name="song_id" value="{{ audioClip.id }}">
+						<input type="hidden" name="song_name" value="{{ audioClip.song_name }}">
+						<input type="hidden" name="song_link" value="{{ audioClip.song_link }}">
+						<span><button type="submit"><i class="fas fa-play"></i></button></span>
+					</form>
+					<form action="/controlSong-form" method="POST">
+						<input type="hidden" name="song_func" value="stopsong">
+						<input type="hidden" name="song_id" value="{{ audioClip.id }}">
+						<input type="hidden" name="song_name" value="{{ audioClip.song_name }}">
+						<input type="hidden" name="song_link" value="{{ audioClip.song_link }}">
+						<span><button type="submit"><i class="fas fa-stop"></i></button></span>
+					</form>
+
+					<label class="formRight-container_label_name"><b>{{ audioClip.song_name }}</b></label>
+					<label class="formRight-container_label_link"><b>{{ audioClip.song_link }}</b></label>
+
+					<form action="/controlSong-form" method="POST">
+						<input type="hidden" name="song_func" value="updatesong">
+						<input type="hidden" name="song_id" value="{{ audioClip.id }}">
+						<input type="hidden" name="song_name" value="{{ audioClip.song_name }}">
+						<input type="hidden" name="song_link" value="{{ audioClip.song_link }}">
+						<span><button type="submit"><i class="fas fa-pencil-alt"></i></button></span>
+					</form>
+					<form action="/controlSong-form" method="POST">
+						<input type="hidden" name="song_func" value="deletesong">
+						<input type="hidden" name="song_id" value="{{ audioClip.id }}">
+						<input type="hidden" name="song_name" value="{{ audioClip.song_name }}">
+						<input type="hidden" name="song_link" value="{{ audioClip.song_link }}">
+						<span><button type="submit"><i class="fas fa-trash"></i></button></span>
+					</form>
+					
+				</div>
+			{% else %}	
+			    <div>
+				    <br>
+				    <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+				    <label>NO SONG in Playlist!!!<label>
+				</div>
+			{% endfor %}
+		</div>
+		
+		<div class="popup-overlay" id="tablepopup-overlay">
+			<div class="popup">
+				<h2>Add Playlist</h2>
+				<form action="/makeplaylist-Exe" method="POST"><br />
+					<input type="hidden" name="valmode" value="alarm">
+
+					<label id="idLabelSource" name="">Playlist name</label>
+					<input type="text" name="playlistname" placeholder="Enter a playlist name">
+
+					<button id="btnClose" name="Cancel">Cancel</button>   
+					<button id="btnReserve" name="Save" type="submit">Save</button>
+				</form>
+			</div>
+		</div>
+		
+		<div class="popup-overlay" id="addSongpopup-overlay">
+			<div class="popup">
+				<h2>Add Stream</h2>
+				<form method="POST" action="/addsongPlaylist-Exe"><br />
+					<label >Stream name</label>
+					<input type="text" name="songname" placeholder="Enter a stream name">
+
+					<label >Stream URL</label>
+					<input type="text" name="songlink" placeholder="Enter a stream url">
+
+					<button id="btnClose" name="Cancel">Cancel</button>   
+					<button id="btnReserve" name="Save" type="submit">Save</button>
+				</form>
+			</div>
+		</div>
+		
+{% endblock %}
+
+{% block javascript %} 
+		function toggleShow() {
+			var songList = document.getElementById("song-list");			
+			songList.style.display = (songList.style.display == 'none') ? 'block' : 'none'
+		}
+		
+		var tableOverlayPopup = document.getElementById("tablepopup-overlay");
+		var addSongOverlayPopup = document.getElementById("addSongpopup-overlay");
+        var popupBox = document.querySelector(".popup");
+      
+        function clicked_btnAddPlaylist() {
+            tableOverlayPopup.style.display = "block";
+        }
+        function clicked_btnAddSong() {
+            addSongOverlayPopup.style.display = "block";
+        }
+
+        // Close the popup if the user clicks outside of it
+        window.onclick = function(event) {
+            if (event.target == tableOverlayPopup) {
+                tableOverlayPopup.style.display = "none";
+            } 
+            else if(event.target == addSongOverlayPopup) {
+                addSongOverlayPopup.style.display = "none";
+	        }		
+        }
+{% endblock %}

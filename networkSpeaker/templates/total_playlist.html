@@ -1,0 +1,17 @@
+{% extends 'layout.html' %}
+
+<!DOCTYPE html>
+<html>
+<head>
+{% block title %}{{title}}{% endblock %}
+</head>
+
+<body>
+{% block content %}
+	<h1>Temperature Sensor Value</h1>
+	<hr />
+	<img src="{{ url_for('static', filename='graph.png') }}" alt="Picture" weight="1200" height="640">
+	  
+{% endblock %}
+</body>
+</html>

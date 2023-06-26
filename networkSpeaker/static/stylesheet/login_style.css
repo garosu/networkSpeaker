@@ -1,0 +1,38 @@
+/* CSS styles for the form */
+.form-container {
+    width: 300px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-left: 20px;
+    margin-top: 20px;
+  }
+
+  .form-container label {
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  .form-container input[type="text"] {
+    width: 98%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  .form-container input[type="password"] {
+    width: 98%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+
+  .form-container button {
+    background-color: #bbddf1;
+    color: dark-blue;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-top: 30px;
+    margin-left: 120px;
+  }

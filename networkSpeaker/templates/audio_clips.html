@@ -1,0 +1,70 @@
+{% extends 'layout.html' %}
+
+{% block stylelink %}
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+	<link rel="stylesheet" href="./static/stylesheet/audioclip.css">
+{% endblock %}
+
+{% block title %}{{title}}{% endblock %}
+
+{% block style %}
+    .title_label {
+    display: block;
+    padding: 2px 30px;
+    width: 500px;
+    margin-bottom: 0px;
+    color: dark-blue;
+    border: 0px solid #ccc;
+  }
+{% endblock %}
+
+{% block content %}
+		<h1 style="color:#5050ff">Audio clips</h1>
+		<div>
+		{% for audioClip in dbAudio %}
+			<div class="formPlay-container">
+				<form action="/controlAudioclip-form" method="POST">
+					<input type="hidden" name="audio_func" value="playaudio">
+					<input type="hidden" name="audio_name" value="{{ audioClip.audio_name }}">
+					<input type="hidden" name="audio_link" value="{{ audioClip.audio_link }}">
+					<span><button type="submit"><i class="fas fa-play"></i></button></span>
+				</form>
+				<form action="/controlAudioclip-form" method="POST">
+					<input type="hidden" name="audio_func" value="stopaudio">
+					<input type="hidden" name="audio_name" value="{{ audioClip.audio_name }}">
+					<input type="hidden" name="audio_link" value="{{ audioClip.audio_link }}">
+					<span><button type="submit"><i class="fas fa-stop"></i></button></span>
+				</form>
+				<label class="title_label"><b>{{ audioClip.audio_link }}</b></label>
+				<form action="/controlAudioclip-form" method="POST">
+					<input type="hidden" name="audio_func" value="pauseaudio">
+					<input type="hidden" name="audio_name" value="{{ audioClip.audio_name }}">
+					<input type="hidden" name="audio_link" value="{{ audioClip.audio_link }}">
+					<span><button type="submit"><i class="fas fa-pause"></i></button></span>
+				</form>
+				<form action="/controlAudioclip-form" method="POST">
+					<input type="hidden" name="audio_func" value="downloadaudio">
+					<input type="hidden" name="audio_name" value="{{ audioClip.audio_name }}">
+					<input type="hidden" name="audio_link" value="{{ audioClip.audio_link }}">
+					<span><button type="submit"><i class="fas fa-download"></i></button></span>
+				</form>
+				<form action="/controlAudioclip-form" method="POST">
+					<input type="hidden" name="audio_func" value="readaudio">
+					<input type="hidden" name="audio_name" value="{{ audioClip.audio_name }}">
+					<input type="hidden" name="audio_link" value="{{ audioClip.audio_link }}">
+					<span><button type="submit"><i class="fas fa-pencil-alt"></i></button></span>
+				</form>
+				<form action="/controlAudioclip-form" method="POST">
+					<input type="hidden" name="audio_func" value="trashaudio">
+					<input type="hidden" name="audio_name" value="{{ audioClip.audio_name }}">
+					<input type="hidden" name="audio_link" value="{{ audioClip.audio_link }}">
+					<span><button type="submit"><i class="fas fa-trash"></i></button></span>
+				</form>
+			</div>
+		{% else %}	
+			<li>
+				<em>Unbelievable. No entries so far</em>
+		{% endfor %}
+		</div>
+
+{% endblock %}

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./static/stylesheet/login_style.css"
+  </head>
+  <body>
+    <h1>Login</h1>
+    
+    <div class="form-container">
+      <form method="POST" action="{{ url_for('loginCheck') }}">
+        <label for="username">Username:</label>
+        <input type="text" name="username" id="username" required><br>
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password" required><br>
+        <button type="submit">Login</button>
+      </form>
+    </div>
+  </body>
+</html>

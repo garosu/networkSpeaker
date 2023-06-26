@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+	{% block stylelink %}{% endblock %}
+<head>
+    <title>{% block title %}{% endblock %}</title>
+	<style>
+		html,
+		body {
+			width: 100%;
+			height: 100%;
+		}
+		/* Super menu on the left */
+		#super-menu {
+			position: absolute;
+			top:0px;
+			left:0px;
+			width: 1500px;
+			background-color:#4040ff;
+			height: 50px; /* Make the menu take up the full height of the screen */
+		}
+		/* Main menu on the left */
+		#main-menu {
+			position: absolute;
+			top:50px;
+			left:0px;
+			width: 320px;
+			background-color:#e0ffff;
+			height: 770px; /* Make the menu take up the full height of the screen */
+			border-color: #f0ffff;
+			border-style: solid;
+			border-right-width: 4px;
+		}
+		
+		/* Sub-menu on the right */
+		#sub-menu {
+			position: absolute;
+			top:50px;
+			left:320px;
+			width: 1080px;
+			height: 670px; /* Make the menu take up the full height of the screen */
+			background-color:#f4ffff;
+			padding: 50px;
+		}
+		.lable_company {
+			display: inline-block;
+			position: absolute;
+			top:12px;
+			left:1222px;
+			width: 250px;
+			background-color: #4040ff;
+			color: #a0ffff;
+			font-weight: bold;
+			font-style: italic;
+			padding: 4px 10px;
+		}
+        
+        {% block style %}{% endblock %}
+	</style>
+</head>
+<body>
+	<div id="super-menu">
+		<label class="lable_company">REMANTEK NETWORK SPEAKER</label><br>
+	</div>
+	<div id="main-menu">
+		<ul>
+			<li><a href="overview">Overview</a></li>
+			<li>Network Storage</li>
+			<li>Audio</li>
+				<ul>
+					<li><a href="audio_clips">Audio Clips</a></li>
+					<li><a href="output_gain">Output Gain</a></li>
+				<!--	<li><a href="system_volume">System Volume</a></li> -->
+				</ul>
+			<li>Network</li>
+				<ul>
+					<li><a href="dhcp_setting">DHCP Setting</a></li>  
+					<li><a href="static_setting">Static Setting</a></li>
+				</ul>
+			<li>Restart</li>
+			<li>Factory Reset</li>
+
+			{% if session.logged_in_root %}
+			<li>User</li>
+				<ul>
+					<li><a href="add_user">Add</a></li>
+					<li><a href="edit_user">Edit</a></li>
+				</ul>
+			{% else %}
+			<li>User</li>
+				<ul>
+					<li><a href="edit_user">Edit</a></li>
+				</ul>
+			{% endif%}
+<!--			<li>User</li>
+				<ul>
+					<li><a href="add_user">Add</a></li>
+					<li><a href="edit_user">Edit</a></li>
+				</ul>
+				-->
+		</ul>
+	</div>
+	<div id="sub-menu">
+        {% block content %}{% endblock %}
+    </div>
+    <script>
+		{% block javascript %} {% endblock %}		
+    </script>
+</body>
+</html>

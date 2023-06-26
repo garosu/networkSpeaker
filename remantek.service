@@ -1,0 +1,13 @@
+[Unit]
+Description=Remantek Network speaker serve flask
+After=network.target
+
+[Service]
+User=rock
+StandardOutput=inherit
+StandardError=inherit
+WorkingDirectory=/var/www/html
+ExecStart=/usr/bin/python3 runserver.py
+
+[Install]
+WantedBy=multi-user.target 

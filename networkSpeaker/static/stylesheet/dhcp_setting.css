@@ -1,0 +1,104 @@
+    /* CSS styles for the form */
+    form {
+      width: 400px;
+      margin: auto;
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+    }
+    label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 5px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+    input[type="password"] {
+      width: 100%;
+      padding: 5px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+    input[type="submit"] {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    input[type="submit"]:hover {
+      background-color: #45a049;
+    }
+		
+		
+		/* Styling for the network settings menu */
+		.network-settings-menu {
+			background-color: #f2f2f2;
+			border-radius: 5px;
+			box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+			padding: 10px;
+			position: relative;
+			width: 300px;
+		}
+
+		/* Styling for the network settings form */
+		.network-settings-form {
+			display: flex;
+			flex-direction: column;
+		}
+
+		.network-settings-form label {
+			margin-bottom: 5px;
+		}
+
+		.network-settings-form input[type="text"] {
+			border: none;
+			border-radius: 3px;
+			box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+			margin-bottom: 10px;
+			padding: 5px;
+		}
+
+		.network-settings-form input[type="submit"] {
+			background-color: #4CAF50;
+			border: none;
+			border-radius: 3px;
+			color: #fff;
+			cursor: pointer;
+			padding: 10px;
+			transition: background-color 0.2s ease-in-out;
+		}
+
+		.network-settings-form input[type="submit"]:hover {
+			background-color: #3e8e41;
+		}
+
+		/* Styling for the close button */
+		.close-button {
+			background-color: #f44336;
+			border: none;
+			border-radius: 50%;
+			color: #fff;
+			cursor: pointer;
+			font-size: 16px;
+			height: 20px;
+			line-height: 20px;
+			padding: 0;
+			position: absolute;
+			right: -10px;
+			text-align: center;
+			top: -10px;
+			width: 20px;
+			transition: background-color 0.2s ease-in-out;
+		}
+
+		.close-button:hover {
+			background-color: #d32f2f;
+		}

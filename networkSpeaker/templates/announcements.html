@@ -1,0 +1,225 @@
+{% extends 'layout.html' %}
+
+{% block stylelink %}
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous"><head>
+    <link rel="stylesheet" href="./static/stylesheet/alarms.css"
+{% endblock %}
+{% block title %}{{title}}{% endblock %}
+
+{% block style %}
+	.schedules-form {
+		background-color: #d0ffff;
+		border-radius: 5px;
+		position: absolute;
+		top:50px;
+		left:100px;
+		height: 30px;
+		width: 200px;
+		overflow: hidden;
+	}
+	.music-form {
+		background-color: #d0ffff;
+		border-radius: 5px;
+		position: absolute;
+		top:50px;
+		left:350px;
+		height: 30px;
+		width: 200px;
+		overflow: hidden;
+	}
+	.announcements-form {
+		background-color: #d0ffff;
+		border-radius: 5px;
+		position: absolute;
+		top:50px;
+		left:600px;
+		height: 30px;
+		width: 200px;
+		overflow: hidden;
+	}
+
+	.garosu-button {
+		background-color: #2080ff;
+		border-radius: 4px;
+		border-color: #8080ff;
+		height: 30px;
+		overflow: hidden;
+		width: 200px;
+		color: white;
+		text-align: center;
+		font-weight: bold;
+	}
+
+	.button_addAlarm {
+		display: inline-block;
+		position: absolute;
+		top:60px;
+		left:860px;
+		width: 160px;
+		height: 30px;
+		margin-top: 10px;
+		border: none;
+		background-color: #a0a0a0;
+		color: white;
+		text-align: left;
+		font-weight: bold;
+		padding: 4px 10px;
+	}
+
+/* Styles for the popup overlay */
+.popup-overlay {
+	position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.2);
+        z-index: 1;
+        display: none;
+}
+
+/* Styles for the popup box */
+.popup {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	width: 340px;
+	transform: translate(-50%, -50%);
+	background-color: white;
+	padding: 20px;
+	border: 1px solid black;
+	border-radius: 5px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+        .popup label {
+            display: block;
+            margin-top: 5px;
+            margin-bottom: 5px;
+            color:gray;
+        }
+
+        .popup input[type="time"] {
+            width: 96%;
+            padding: 5px;
+            margin-bottom: 15px;
+            color: red;
+        }
+
+        .popup input[type="date"] {
+            width: 96%;
+            padding: 5px;
+            margin-bottom: 15px;
+            color: red;
+        }
+
+        .popup input[type="text"] {
+            width: 96%;
+            padding: 5px;
+            margin-bottom: 15px;
+        }
+
+        .popup button {
+            margin-top: 20px;
+            margin-left: 10px;
+            width: 45%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+{% endblock %}
+
+{% block content %}
+
+		<form class="schedules-form" method="GET" action="{{ url_for('gotoSchedulesPage') }}">
+			<button class="garosu-button" type="submit">SCHEDULES</button>
+		</form>
+
+		<form class="music-form" method="GET" action="{{ url_for('gotoMusicPage') }}">
+			<button class="garosu-button" type="submit">MUSIC</button>
+		</form>
+
+		<form class="announcements-form" method="GET" action="{{ url_for('gotoAnnouncementsPage') }}">
+			<button class="garosu-button" type="submit">ANNOUNCEMENTS</button>
+		</form>
+		<button class="button_addAlarm" onclick="clicked_btnAddAlarm()" type="submit">add Alarm</button>
+<!-- ==================================================================================================== -->
+		<br>
+		<br>
+		<br>
+		<div>
+			{% for alarmClip in dbAlarm %}
+				<div class="formAlarm-container">
+					<form action="/controlAlarm-form" method="POST">
+						<input type="hidden" name="alarm_func" value="playalarm">
+						<input type="hidden" name="alarm_id" value="{{ alarmClip.id }}">
+						<input type="hidden" name="alarm_name" value="{{ alarmClip.alarm_name }}">
+						<input type="hidden" name="alarm_link" value="{{ alarmClip.alarm_link }}">
+						<span><button type="submit"><i class="fas fa-play"></i></button></span>
+					</form>
+					<form action="/controlAlarm-form" method="POST">
+						<input type="hidden" name="alarm_func" value="stopalarm">
+						<input type="hidden" name="alarm_id" value="{{ alarmClip.id }}">
+						<input type="hidden" name="alarm_name" value="{{ alarmClip.alarm_name }}">
+						<input type="hidden" name="alarm_link" value="{{ alarmClip.alarm_link }}">
+						<span><button type="submit"><i class="fas fa-stop"></i></button></span>
+					</form>
+					<label><b>{{ alarmClip.alarm_name }}</b></label>
+					<label><b>{{ alarmClip.alarm_link }}</b></label>
+					<form action="/controlAlarm-form" method="POST">
+						<input type="hidden" name="alarm_func" value="updatealarm">
+						<input type="hidden" name="alarm_id" value="{{ alarmClip.id }}">
+						<input type="hidden" name="alarm_name" value="{{ alarmClip.alarm_name }}">
+						<input type="hidden" name="alarm_link" value="{{ alarmClip.alarm_link }}">
+						<span><button type="submit"><i class="fas fa-pencil-alt"></i></button></span>
+					</form>
+					<form action="/controlAlarm-form" method="POST">
+						<input type="hidden" name="alarm_func" value="deletealarm">
+						<input type="hidden" name="alarm_id" value="{{ alarmClip.id }}">
+						<input type="hidden" name="alarm_name" value="{{ alarmClip.alarm_name }}">
+						<input type="hidden" name="alarm_link" value="{{ alarmClip.alarm_link }}">
+						<span><button type="submit"><i class="fas fa-trash"></i></button></span>
+					</form>
+				</div>
+			{% else %}	
+				<li>
+					<em>Unbelievable. No entries so far</em>
+			{% endfor %}
+		</div>
+		
+		<div class="popup-overlay" id="addAlarmpopup-overlay">
+			<div class="popup">
+				<h2>Add Alarm</h2>
+				<form method="POST" action="/addAlarm-Exe"><br />
+					<label >Alarm name</label>
+					<input type="text" name="alarmname" placeholder="Enter a alarm name">
+
+					<label >Alarm URL</label>
+					<input type="text" name="alarmlink" placeholder="Enter a alarm url">
+
+					<button id="btnClose" name="Cancel">Cancel</button>   
+					<button id="btnReserve" name="Save" type="submit">Save</button>
+				</form>
+			</div>
+		</div>
+{% endblock %}
+
+{% block javascript %} 
+		var tableOverlayPopup = document.getElementById("addAlarmpopup-overlay");
+        var popupBox = document.querySelector(".popup");
+      
+        function clicked_btnAddAlarm() {
+            tableOverlayPopup.style.display = "block";
+        }
+
+        // Close the popup if the user clicks outside of it
+        window.onclick = function(event) {
+            if (event.target == tableOverlayPopup) {
+                tableOverlayPopup.style.display = "none";
+            } 
+        }
+{% endblock %}
